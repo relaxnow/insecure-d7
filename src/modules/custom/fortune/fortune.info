@@ -1,0 +1,3 @@
+core = "7.x"
+description = "Horribly insecure fortune module for Drupal 7."
+name = "Fortune"

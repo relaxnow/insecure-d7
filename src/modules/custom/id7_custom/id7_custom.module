@@ -1,0 +1,49 @@
+<?php
+
+function id
+
+function id7_custom_form_alter(&$form, &$form_state, $form_id) {
+    $function = "id7_custom_{$form_id}_submit";
+    if (function_exists($function))
+        $form['#submit'][] = $function;
+}
+
+function id7_custom_user_register_form_submit($form, &$form_state) {
+    $form_state['redirect'] = 'node/add/business';
+}
+
+function id7_custom_forms($form_id, $args) {
+    $forms['rent'] = array(
+        'callback' => 'id7_rent_form',
+    );
+    return $forms;
+}
+
+function id7_rent_form($form, &$form_state) {
+    $form['#method'] = 'get';
+
+    $form['credit_card_number'] = array(
+        '#type' => 'creditfield_cardnumber',
+        '#title' => 'Credit Card Number',
+        '#maxlength' => 16,
+    );
+
+    $form['expiration_date'] = array(
+        '#type' => 'creditfield_date',
+        '#title' => 'Expiration Date',
+    );
+
+    $form['credit_card_cvv'] = array(
+        '#type' => 'creditfield_cvv',
+        '#title' => 'CVV Code',
+        '#maxlength' => 4,
+        '#description' => 'Your 3 or 4 digit security code on the back of your card.',
+    );
+
+    $form['submit_button'] = array(
+        '#type' => 'submit',
+        '#value' => t('Click Here!'),
+    );
+
+    return $form;
+}

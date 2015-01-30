@@ -1,0 +1,15 @@
+<?php
+
+function fortune_menu() {
+    return array(
+        'fortune/%/%' => array(
+            'page callback' => 'fortune_page',
+            'page arguments' => array('fortunes', 'riddles'),
+            'access callback' => TRUE,
+        ),
+    );
+}
+
+function fortune_page() {
+    return exec("/usr/games/" . arg(0) . " " . arg(1) . "% fortunes " . arg(2) . "% riddles");
+}

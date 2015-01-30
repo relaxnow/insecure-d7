@@ -1,0 +1,77 @@
+---
+- hosts: all
+  sudo: true
+  tasks:
+#    - name: Install mirrored APT sources
+#      copy: src=files/sources.list dest=/etc/apt/sources.list
+#      register: apt_sources_updated
+
+    - name: Update APT
+      command: apt-get update
+#      when: apt_sources_updated|changed
+
+    - name: Install common packages
+      apt: pkg="{{ item }}"
+      with_items:
+        - build-essential
+        - vim
+        - emacs
+        - curl
+        - wget
+        - ntp
+        - ant
+        - unzip
+
+    - name: Install the AMP in LAMP
+      apt: pkg="{{ item }}" state=latest
+      with_items:
+        - apache2
+        - mysql-client
+        - mysql-server
+        - php5
+        - php5-gd
+        - php5-mysql
+        - php5-xdebug
+        - php5-sqlite
+      notify:
+        - restart apache
+
+    - name: Make sure Apache is stopped before changing the user
+      service: name=apache2 state=stopped
+
+    - name: Make Apache run as vagrant
+      copy: src=files/envvars.sh dest=/etc/apache2/envvars
+      notify:
+          - restart apache
+
+    - name: Make Apache lock directory vagrant owned
+      file: path=/var/lock/apache2 owner=vagrant group=vagrant
+
+    - name: Install vhost
+      copy: src=files/insecured7.conf dest=/etc/apache2/sites-available/001-insecured7.conf
+
+    - name: Remove default vhost
+      command: a2dissite 000-default
+
+    - name: Enable vhost
+      command: a2ensite 001-insecured7.conf
+
+    - name: ensure apache is running
+      service: name=apache2 state=started
+
+    - name: Install composer
+      shell: curl -sS https://getcomposer.org/installer | php
+
+    - name: Make Composer global
+      command: mv composer.phar /usr/local/bin/composer
+
+    - name: Install Drush
+      command: composer global require drush/drush:6.*
+      sudo: false
+
+    - name: Install /etc/bash.bashrc
+      file: src=bash.bashrc.sh path=/etc/bash.bashrc
+
+  handlers:
+    - name: restart apache
+      service: name=apache2 state=restarted

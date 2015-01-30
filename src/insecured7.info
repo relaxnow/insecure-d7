@@ -1,0 +1,10 @@
+name = InsecureD7
+description = Insecure D7 profile by boy@ibuildings.nl
+core = 7.x
+base theme = insecured7
+
+dependencies[] = block
+dependencies[] = field
+dependencies[] = field_ui
+
+dependencies[] = insecured7

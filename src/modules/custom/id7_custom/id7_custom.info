@@ -1,0 +1,3 @@
+core = "7.x"
+description = "Core functionality for the InsecureD7 website."
+name = "InsecureD7 core functionality"

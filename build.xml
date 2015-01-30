@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="InsecureD7" default="make">
+    <target name="make">
+        <exec executable="drush" failonerror="true">
+            <arg line="make -y --contrib-destination=sites/all src/insecured7.make docroot-new"/>
+        </exec>
+
+        <exec executable="bash" failonerror="true">
+            <arg line="./bin/build/move_files_to_new_docroot.sh"/>
+        </exec>
+
+        <exec executable="ln" failonerror="true">
+            <arg line="-s ../../src docroot-new/profiles/insecured7"/>
+        </exec>
+
+        <exec executable="rm" failonerror="true">
+            <arg line="-rf docroot"/>
+        </exec>
+
+        <exec executable="mv">
+            <arg line="docroot-new docroot"/>
+        </exec>
+    </target>
+</project>
