@@ -8,6 +8,7 @@ defaults[projects][subdir] = "contrib"
 ;
 
 projects[] = admin_menu
+projects[] = auto_nodetitle
 projects[] = views
 
 ;

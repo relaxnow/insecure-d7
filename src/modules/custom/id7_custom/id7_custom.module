@@ -1,6 +1,107 @@
 <?php
 
-function id
+function id7_custom_theme($existing, $type, $theme, $path) {
+  return array(
+      'cc-missing' => array(
+          'template' => 'cc-missing', // without the .tpl.php extension
+          'variables' => array(), // to define default values for passed variables
+      )
+  );
+}
+
+function id7_custom_menu() {
+    $items = array();
+
+    $items['place-order'] = array(
+        'page callback' => 'id7_custom_place_order_page',
+        'access callback' => true,
+    );
+    $items['my-vouchers'] = array(
+        'page callback' => 'id7_vouchers',
+        'access callback' => true,
+    );
+    $items['my-credit-cards'] = array(
+        'page callback' => 'id7_cc',
+        'access callback' => true,
+    );
+        $items['my-credit-cards/add']  = array(
+            'page callback' => 'id7_cc_add',
+            'access callback' => true,
+        );
+        $items['my-credit-cards/%/edit'] = array(
+            'page callback' => 'id7_cc_edit',
+            'access callback' => true,
+        );
+        $items['my-credit-cards/%/delete'] = array(
+            'page callback' => 'id7_cc_delete',
+            'access callback' => true,
+        );
+
+//    $items['all-vouchers'] = array(
+//        'page callback' => 'id7_vouchers_all',
+//        'access callback' => true,
+//    );
+//
+//    $items['disable-user'] = array(
+//        'page callback' => 'id7_disable_user',
+//        'access callback' => true,
+//    );
+
+    return $items;
+}
+
+function id7_vouchers() {
+    return 'OWHAI!';
+}
+
+function id7_vouchers_all() {
+    return 'all';
+}
+
+function id7_disable_user() {
+    return 'user';
+}
+
+function id7_custom_buy() {
+
+}
+
+function id7_cc() {
+
+    $cards = id7_get_card_rows();
+
+    $rows = array();
+    while ($card = $cards->fetchAssoc()) {
+        $rows[] = "<tr>" .
+            "<td>{$card['number']}</td>".
+            "<td>{$card['exp_date_month']}/{$card['exp_date_year']}</td>".
+        "</tr>";
+    }
+    $rows = implode(PHP_EOL, $rows);
+
+    if (empty($rows)) {
+        return <<<HTML
+<p>No credit cards registered, please <a href="/my-credit-cards/add">register a credit card</a>.</p>
+HTML;
+    }
+
+    return <<<TABLE
+<a href="/my-credit-cards/add">Add</a>
+<table>
+    <thead><th>number</th><th>exp. date.</th></thead>
+    <tbody>$rows</tbody>
+</table>
+TABLE;
+}
+
+function id7_get_card_rows() {
+    global $user;
+    return db_query('SELECT * FROM credit_cards WHERE uid=' . $user->uid);
+}
+
+function id7_cc_add() {
+    return render(drupal_get_form('ccedit'));
+}
 
 function id7_custom_form_alter(&$form, &$form_state, $form_id) {
     $function = "id7_custom_{$form_id}_submit";
@@ -13,14 +114,15 @@ function id7_custom_user_register_form_submit($form, &$form_state) {
 }
 
 function id7_custom_forms($form_id, $args) {
-    $forms['rent'] = array(
-        'callback' => 'id7_rent_form',
+    $forms['ccedit'] = array(
+        'callback' => 'id7_ccedit_form',
     );
     return $forms;
 }
 
-function id7_rent_form($form, &$form_state) {
-    $form['#method'] = 'get';
+function id7_ccedit_form($form, &$form_state) {
+    $form['#method'] = 'post';
+    $form['#submit'][] = 'id7_ccedit_submit';
 
     $form['credit_card_number'] = array(
         '#type' => 'creditfield_cardnumber',
@@ -42,8 +144,13 @@ function id7_rent_form($form, &$form_state) {
 
     $form['submit_button'] = array(
         '#type' => 'submit',
-        '#value' => t('Click Here!'),
+        '#value' => t('Submit'),
     );
 
     return $form;
+}
+
+function id7_ccedit_submit()
+{
+    var_dump(func_get_args());exit;
 }
