@@ -3,9 +3,13 @@
 function id7_custom_theme($existing, $type, $theme, $path) {
   return array(
       'cc-missing' => array(
-          'template' => 'cc-missing', // without the .tpl.php extension
-          'variables' => array(), // to define default values for passed variables
-      )
+          'template' => 'cc-missing',
+          'variables' => array(),
+      ),
+      'cc-overview' => array(
+          'template' => 'cc-overview',
+          'variables' => array('rowsHtml' => array())
+      ),
   );
 }
 
@@ -25,7 +29,8 @@ function id7_custom_menu() {
         'access callback' => true,
     );
         $items['my-credit-cards/add']  = array(
-            'page callback' => 'id7_cc_add',
+            'page callback' => 'drupal_get_form',
+            'page arguments' => array('form_ccedit'),
             'access callback' => true,
         );
         $items['my-credit-cards/%/edit'] = array(
@@ -49,6 +54,41 @@ function id7_custom_menu() {
 
     return $items;
 }
+
+
+function form_ccedit($form, &$form_state) {
+//    $form['#method'] = 'get';
+    $form['credit_card_number'] = array(
+        '#type' => 'creditfield_cardnumber',
+        '#title' => 'Credit Card Number',
+        '#maxlength' => 16,
+    );
+
+    $form['expiration_date'] = array(
+        '#type' => 'creditfield_date',
+        '#title' => 'Expiration Date',
+    );
+
+    $form['credit_card_cvv'] = array(
+        '#type' => 'creditfield_cvv',
+        '#title' => 'CVV Code',
+        '#maxlength' => 4,
+        '#description' => 'Your 3 or 4 digit security code on the back of your card.',
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Submit'),
+    );
+
+    return $form;
+}
+
+function form_ccedit_submit($form, &$form_state)
+{
+    var_dump("yay!",func_get_args());exit;
+}
+
 
 function id7_vouchers() {
     return 'OWHAI!';
@@ -80,18 +120,10 @@ function id7_cc() {
     $rows = implode(PHP_EOL, $rows);
 
     if (empty($rows)) {
-        return <<<HTML
-<p>No credit cards registered, please <a href="/my-credit-cards/add">register a credit card</a>.</p>
-HTML;
+        return theme('cc-missing');
     }
 
-    return <<<TABLE
-<a href="/my-credit-cards/add">Add</a>
-<table>
-    <thead><th>number</th><th>exp. date.</th></thead>
-    <tbody>$rows</tbody>
-</table>
-TABLE;
+    return theme('cc-overview', array('rowsHtml' => $rows));
 }
 
 function id7_get_card_rows() {
@@ -99,58 +131,16 @@ function id7_get_card_rows() {
     return db_query('SELECT * FROM credit_cards WHERE uid=' . $user->uid);
 }
 
-function id7_cc_add() {
-    return render(drupal_get_form('ccedit'));
-}
-
-function id7_custom_form_alter(&$form, &$form_state, $form_id) {
-    $function = "id7_custom_{$form_id}_submit";
-    if (function_exists($function))
-        $form['#submit'][] = $function;
-}
+//function id7_custom_form_alter(&$form, &$form_state, $form_id) {
+//    echo "<pre>";debug_print_backtrace();var_dump($form_state); echo '</pre>';
+//    $function = "id7_custom_{$form_id}_submit";
+//    $form['#submit'][] = $function;
+//
+//    if (function_exists($function)) {
+//
+//    }
+//}
 
 function id7_custom_user_register_form_submit($form, &$form_state) {
     $form_state['redirect'] = 'node/add/business';
-}
-
-function id7_custom_forms($form_id, $args) {
-    $forms['ccedit'] = array(
-        'callback' => 'id7_ccedit_form',
-    );
-    return $forms;
-}
-
-function id7_ccedit_form($form, &$form_state) {
-    $form['#method'] = 'post';
-    $form['#submit'][] = 'id7_ccedit_submit';
-
-    $form['credit_card_number'] = array(
-        '#type' => 'creditfield_cardnumber',
-        '#title' => 'Credit Card Number',
-        '#maxlength' => 16,
-    );
-
-    $form['expiration_date'] = array(
-        '#type' => 'creditfield_date',
-        '#title' => 'Expiration Date',
-    );
-
-    $form['credit_card_cvv'] = array(
-        '#type' => 'creditfield_cvv',
-        '#title' => 'CVV Code',
-        '#maxlength' => 4,
-        '#description' => 'Your 3 or 4 digit security code on the back of your card.',
-    );
-
-    $form['submit_button'] = array(
-        '#type' => 'submit',
-        '#value' => t('Submit'),
-    );
-
-    return $form;
-}
-
-function id7_ccedit_submit()
-{
-    var_dump(func_get_args());exit;
 }
