@@ -2,13 +2,16 @@
 - hosts: all
   sudo: true
   tasks:
-#    - name: Install mirrored APT sources
-#      copy: src=files/sources.list dest=/etc/apt/sources.list
-#      register: apt_sources_updated
+    - name: Install mirrored APT sources
+      copy: src=files/sources.list dest=/etc/apt/sources.list
+      register: apt_sources_updated
 
     - name: Update APT
       command: apt-get update
-#      when: apt_sources_updated|changed
+      when: apt_sources_updated|changed
+
+    - name: Install PGP key
+      command: apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 3B4FE6ACC0B21F32
 
     - name: Install common packages
       apt: pkg="{{ item }}"
@@ -75,7 +78,7 @@
       sudo: false
 
     - name: Install /etc/bash.bashrc
-      file: src=bash.bashrc.sh path=/etc/bash.bashrc
+      copy: src=files/bash.bashrc.sh dest=/etc/bash.bashrc
 
     # Create a new database with name 'insecured7'
     - mysql_db: name=insecured7 state=present

@@ -55,8 +55,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :ansible do |ansible|
     ansible.playbook = "ansible/playbook.yml"
-
-    # Disable default limit (required with Vagrant 1.5+)
-    ansible.limit = 'all'
   end
 end
