@@ -26,5 +26,4 @@ projects[] = devel_themer
 projects[simplehtmldom][version] = "1.12"
 
 ; Dependency for views
-projects[] = creditfield
 projects[] = ctools
