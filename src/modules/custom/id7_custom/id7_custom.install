@@ -34,8 +34,8 @@ function id7_custom_schema() {
                     'type' => 'int',
                     'unsigned' => TRUE,
                     'not null' => TRUE),
-                'ccv' => array(
-                    'description' => t('The card ccv code.'),
+                'cvv' => array(
+                    'description' => t('The card cvv code.'),
                     'type' => 'varchar',
                     'length' => 4,
                     'not null' => TRUE),

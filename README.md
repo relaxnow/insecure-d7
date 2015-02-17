@@ -12,7 +12,7 @@ vagrant up &&
 vagrant ssh
 ```
 
-Now on the VM run ```ant site-install``` and it should install the site for you.
+Now on the VM run ```cd /vagrant && ant site-install``` and it should install the site for you.
 
 # Vulnerabilities
 

@@ -10,6 +10,46 @@
 function insecured7_homepage_menu_default_menu_links() {
   $menu_links = array();
 
+  // Exported menu link: main-menu_friendly-fortune:fortune/90/10
+  $menu_links['main-menu_friendly-fortune:fortune/90/10'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => 'fortune/90/10',
+    'router_path' => 'fortune/%/%',
+    'link_title' => 'Friendly Fortune',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+      'identifier' => 'main-menu_friendly-fortune:fortune/90/10',
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 10,
+    'customized' => 1,
+  );
+  // Exported menu link: main-menu_home:<front>
+  $menu_links['main-menu_home:<front>'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => '<front>',
+    'router_path' => '',
+    'link_title' => 'Home',
+    'options' => array(
+      'attributes' => array(
+        'title' => '',
+      ),
+      'identifier' => 'main-menu_home:<front>',
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 1,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -1,
+    'customized' => 1,
+  );
   // Exported menu link: main-menu_my-credit-card:my-credit-card
   $menu_links['main-menu_my-credit-card:my-credit-card'] = array(
     'menu_name' => 'main-menu',
@@ -52,6 +92,8 @@ function insecured7_homepage_menu_default_menu_links() {
   );
   // Translatables
   // Included for use with string extractors like potx.
+  t('Friendly Fortune');
+  t('Home');
   t('My Credit Card');
   t('My Vouchers');
 

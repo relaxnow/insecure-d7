@@ -9,8 +9,10 @@ defaults[projects][subdir] = "contrib"
 
 projects[] = admin_menu
 projects[] = ctools
+projects[] = date
 projects[] = features
 projects[] = features_extra
+
 ;
 ; development.make
 ;
