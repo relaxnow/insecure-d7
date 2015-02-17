@@ -48,6 +48,9 @@
     - name: Make sure Apache is stopped before changing the user
       service: name=apache2 state=stopped
 
+    - name: Install php5/conf.d/errors.ini
+      copy: src=files/errors.ini dest=/etc/php5/conf.d/errors.ini
+
     - name: Make Apache run as vagrant
       copy: src=files/envvars.sh dest=/etc/apache2/envvars
       notify:
