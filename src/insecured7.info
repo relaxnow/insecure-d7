@@ -6,7 +6,7 @@ base theme = insecured7
 dependencies[] = block
 dependencies[] = ctools
 dependencies[] = features
-dependencies[] = fe_blocks
+dependencies[] = fe_block
 dependencies[] = menu
 
 dependencies[] = insecured7_homepage
