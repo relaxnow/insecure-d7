@@ -92,7 +92,17 @@ function id7_custom_credit_card_edit_form($form, &$form_state) {
 
 function id7_custom_credit_card_edit_form_submit($form, &$form_state)
 {
-    var_dump("yay!<pre>",func_get_args());exit;
+    $uid = user_uid_optional_load();
+    db_query(
+        "INSERT INTO credit_cards (uid, number, exp_date_month, exp_date_year, ccv)
+         VALUES(
+            {$uid},
+            '{$form_state['values']['credit_card_number']}',
+            '{$form_state['values']['expiration_date']['month']},
+            '{$form_state['values']['expiration_date']['year']}',
+            '{$form_state['values']['ccv']}'
+         )"
+    );
 }
 
 
