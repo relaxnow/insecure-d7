@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * Implements hook_schema.
+ * @return array
+ */
+function id7_custom_schema() {
+    return array(
+        'credit_cards' =>  array(
+            'description' => t('Store credit cards.'),
+            'fields' => array(
+                'id' => array(
+                    'description' => t('ID'),
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE),
+                'uid' => array(
+                    'description' => t('The userid whose card this is.'),
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE),
+                'number' => array(
+                    'description' => t('The card number.'),
+                    'type' => 'varchar',
+                    'length' => 19,
+                    'not null' => TRUE),
+                'exp_date_month' => array(
+                    'description' => t('The expiration date month.'),
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE),
+                'exp_date_year' => array(
+                    'description' => t('The expiration date year.'),
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE),
+                'ccv' => array(
+                    'description' => t('The card ccv code.'),
+                    'type' => 'varchar',
+                    'length' => 4,
+                    'not null' => TRUE),
+            ),
+            'indexes' => array(
+                'card_owner' => array('uid'),
+            ),
+            'unique keys' => array(
+                'uid_number' => array('uid', 'number'),
+            ),
+            'primary key' => array('id'),
+        )
+    );
+}
