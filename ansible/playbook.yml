@@ -24,6 +24,7 @@
         - ntp
         - ant
         - unzip
+        - fortune
 
     - name: Install the AMP in LAMP
       apt: pkg="{{ item }}" state=latest
