@@ -1,4 +1,4 @@
-<?php if (id7_get_card_rows()->rowCount() === 0): echo theme('cc-missing'); else: ?>
+<?php $card = id7_get_card_row_for_user(); if (empty($card)): echo theme('cc-missing'); else: ?>
 <form action="buy" method=post>
     <select name="quantity" class="form-select">
         <option value=10>10 credits - €5,-</option>

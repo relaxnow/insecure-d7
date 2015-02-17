@@ -8,8 +8,17 @@ function id7_custom_theme($existing, $type, $theme, $path) {
       ),
       'cc-overview' => array(
           'template' => 'cc-overview',
-          'variables' => array('rowsHtml' => array())
+          'variables' => array(
+              'number' => 0,
+              'exp_date_month' => 0,
+              'exp_date_year' => 0,
+              'cvv' => 0,
+          )
       ),
+      'buy' => array(
+          'template' => 'buy',
+          'variables' => array(),
+      )
   );
 }
 
@@ -24,20 +33,16 @@ function id7_custom_menu() {
         'page callback' => 'id7_vouchers',
         'access callback' => true,
     );
-    $items['my-credit-cards'] = array(
+    $items['my-credit-card'] = array(
         'page callback' => 'id7_cc',
         'access callback' => true,
     );
-        $items['my-credit-cards/add']  = array(
+        $items['my-credit-card/set']  = array(
             'page callback' => 'drupal_get_form',
             'page arguments' => array('form_ccedit'),
             'access callback' => true,
         );
-        $items['my-credit-cards/%/edit'] = array(
-            'page callback' => 'id7_cc_edit',
-            'access callback' => true,
-        );
-        $items['my-credit-cards/%/delete'] = array(
+        $items['my-credit-cards/remove/%'] = array(
             'page callback' => 'id7_cc_delete',
             'access callback' => true,
         );
@@ -57,21 +62,23 @@ function id7_custom_menu() {
 
 
 function form_ccedit($form, &$form_state) {
-//    $form['#method'] = 'get';
+    $form['#method'] = 'get';
     $form['credit_card_number'] = array(
-        '#type' => 'creditfield_cardnumber',
+        '#type' => 'textfield',
+        '#maxlength'=> 19,
+        '#size' => 19,
         '#title' => 'Credit Card Number',
-        '#maxlength' => 16,
     );
 
     $form['expiration_date'] = array(
-        '#type' => 'creditfield_date',
+        '#type' => 'date',
         '#title' => 'Expiration Date',
     );
 
     $form['credit_card_cvv'] = array(
-        '#type' => 'creditfield_cvv',
+        '#type' => 'textfield',
         '#title' => 'CVV Code',
+        '#size' => 4,
         '#maxlength' => 4,
         '#description' => 'Your 3 or 4 digit security code on the back of your card.',
     );
@@ -86,12 +93,24 @@ function form_ccedit($form, &$form_state) {
 
 function form_ccedit_submit($form, &$form_state)
 {
-    var_dump("yay!",func_get_args());exit;
+    var_dump("yay!<pre>",func_get_args());exit;
 }
 
 
 function id7_vouchers() {
-    return 'OWHAI!';
+    return <<<HTML
+<table>
+    <thead>
+        <tr>
+            <th>Voucher Nr</th>
+            <td>Credits</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>12345467890</td><td>5</td></tr>
+    </tbody>
+</table>
+HTML;
 }
 
 function id7_vouchers_all() {
@@ -108,27 +127,23 @@ function id7_custom_buy() {
 
 function id7_cc() {
 
-    $cards = id7_get_card_rows();
+    $card_row = id7_get_card_row_for_user();
 
-    $rows = array();
-    while ($card = $cards->fetchAssoc()) {
-        $rows[] = "<tr>" .
-            "<td>{$card['number']}</td>".
-            "<td>{$card['exp_date_month']}/{$card['exp_date_year']}</td>".
-        "</tr>";
-    }
-    $rows = implode(PHP_EOL, $rows);
-
-    if (empty($rows)) {
-        return theme('cc-missing');
+    if (empty($card_row)) {
+        drupal_goto('my-credit-card/set');
+        return '';
     }
 
-    return theme('cc-overview', array('rowsHtml' => $rows));
+    return theme('cc-overview', $card_row);
 }
 
-function id7_get_card_rows() {
+function id7_cc_masking($number) {
+    return substr($number, 0, 4) . str_repeat("X", strlen($number) - 8) . substr($number, -4);
+}
+
+function id7_get_card_row_for_user() {
     global $user;
-    return db_query('SELECT * FROM credit_cards WHERE uid=' . $user->uid);
+    return db_query('SELECT * FROM credit_cards WHERE uid=' . $user->uid)->fetchAssoc();
 }
 
 //function id7_custom_form_alter(&$form, &$form_state, $form_id) {
