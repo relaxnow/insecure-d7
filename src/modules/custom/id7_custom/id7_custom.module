@@ -30,20 +30,20 @@ function id7_custom_menu() {
         'access callback' => true,
     );
     $items['my-vouchers'] = array(
-        'page callback' => 'id7_vouchers',
+        'page callback' => 'id7_custom_my_vouchers_page',
         'access callback' => true,
     );
     $items['my-credit-card'] = array(
-        'page callback' => 'id7_cc',
+        'page callback' => 'id7_my_credit_card_page',
         'access callback' => true,
     );
         $items['my-credit-card/set']  = array(
             'page callback' => 'drupal_get_form',
-            'page arguments' => array('form_ccedit'),
+            'page arguments' => array('id7_custom_credit_card_edit_form'),
             'access callback' => true,
         );
         $items['my-credit-cards/remove/%'] = array(
-            'page callback' => 'id7_cc_delete',
+            'page callback' => 'id7_custom_credit_card_remove_page',
             'access callback' => true,
         );
 
@@ -61,8 +61,7 @@ function id7_custom_menu() {
 }
 
 
-function form_ccedit($form, &$form_state) {
-    $form['#method'] = 'get';
+function id7_custom_credit_card_edit_form($form, &$form_state) {
     $form['credit_card_number'] = array(
         '#type' => 'textfield',
         '#maxlength'=> 19,
@@ -91,13 +90,13 @@ function form_ccedit($form, &$form_state) {
     return $form;
 }
 
-function form_ccedit_submit($form, &$form_state)
+function id7_custom_credit_card_edit_form_submit($form, &$form_state)
 {
     var_dump("yay!<pre>",func_get_args());exit;
 }
 
 
-function id7_vouchers() {
+function id7_custom_my_vouchers_page() {
     return <<<HTML
 <table>
     <thead>
@@ -125,7 +124,7 @@ function id7_custom_buy() {
 
 }
 
-function id7_cc() {
+function id7_my_credit_card_page() {
 
     $card_row = id7_get_card_row_for_user();
 
@@ -157,5 +156,5 @@ function id7_get_card_row_for_user() {
 //}
 
 function id7_custom_user_register_form_submit($form, &$form_state) {
-    $form_state['redirect'] = 'node/add/business';
+    $form_state['redirect'] = 'my-credit-card/set';
 }
