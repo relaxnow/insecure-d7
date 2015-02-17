@@ -1,1 +1,1 @@
-<p>No credit cards registered, please <a href="/my-credit-cards/add">register a credit card</a>.</p>
+<p>No credit cards registered, please <?= l('register a credit card', 'my-credit-card/set'); ?>.</p>
