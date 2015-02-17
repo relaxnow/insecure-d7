@@ -11,7 +11,7 @@ function id7_custom_schema() {
             'fields' => array(
                 'id' => array(
                     'description' => t('ID'),
-                    'type' => 'int',
+                    'type' => 'serial',
                     'unsigned' => TRUE,
                     'not null' => TRUE),
                 'uid' => array(
