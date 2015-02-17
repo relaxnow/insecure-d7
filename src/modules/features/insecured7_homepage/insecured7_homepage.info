@@ -1,0 +1,16 @@
+name = InsecureD7 Homepage
+description = InsecureD7 Homepage
+core = 7.x
+package = Features
+version = 7.x-1.0
+project = insecured7_homepage
+dependencies[] = features
+dependencies[] = id7_custom
+dependencies[] = menu
+features[fe_block_settings][] = system-main-menu
+features[features_api][] = api:2
+features[menu_custom][] = main-menu
+features[menu_links][] = main-menu_my-credit-card:my-credit-card
+features[menu_links][] = main-menu_my-vouchers:my-vouchers
+features_exclude[dependencies][fe_block] = fe_block
+project path = profiles/insecured7/modules/features

@@ -4,7 +4,12 @@ core = 7.x
 base theme = insecured7
 
 dependencies[] = block
-dependencies[] = field
-dependencies[] = field_ui
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = fe_blocks
+dependencies[] = menu
 
-dependencies[] = insecured7
+dependencies[] = insecured7_homepage
+
+dependencies[] = fortune
+dependencies[] = id7_custom

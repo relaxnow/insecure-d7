@@ -8,9 +8,9 @@ defaults[projects][subdir] = "contrib"
 ;
 
 projects[] = admin_menu
-projects[] = auto_nodetitle
-projects[] = views
-
+projects[] = ctools
+projects[] = features
+projects[] = features_extra
 ;
 ; development.make
 ;
@@ -24,6 +24,3 @@ projects[] = devel_themer
 
 ; Dependency for devel_themer
 projects[simplehtmldom][version] = "1.12"
-
-; Dependency for views
-projects[] = ctools
