@@ -27,7 +27,7 @@ function insecured7_homepage_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 10,
+    'weight' => 3,
     'customized' => 1,
   );
   // Exported menu link: main-menu_home:<front>
@@ -47,8 +47,25 @@ function insecured7_homepage_menu_default_menu_links() {
     'external' => 1,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => -1,
+    'weight' => 0,
     'customized' => 1,
+  );
+  // Exported menu link: main-menu_links:node/1
+  $menu_links['main-menu_links:node/1'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => 'node/1',
+    'router_path' => 'node/%',
+    'link_title' => 'Links',
+    'options' => array(
+      'identifier' => 'main-menu_links:node/1',
+    ),
+    'module' => 'menu',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => 4,
+    'customized' => 0,
   );
   // Exported menu link: main-menu_my-credit-card:my-credit-card
   $menu_links['main-menu_my-credit-card:my-credit-card'] = array(
@@ -67,7 +84,7 @@ function insecured7_homepage_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
+    'weight' => 1,
     'customized' => 1,
   );
   // Exported menu link: main-menu_my-vouchers:my-vouchers
@@ -87,13 +104,14 @@ function insecured7_homepage_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
+    'weight' => 2,
     'customized' => 1,
   );
   // Translatables
   // Included for use with string extractors like potx.
   t('Friendly Fortune');
   t('Home');
+  t('Links');
   t('My Credit Card');
   t('My Vouchers');
 

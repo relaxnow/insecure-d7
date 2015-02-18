@@ -1,5 +1,7 @@
 <?php
 /**
  * @file
- * Drupal needs this blank file.
+ * Code for the InsecureD7 Homepage feature.
  */
+
+include_once 'insecured7_homepage.features.inc';
