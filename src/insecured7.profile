@@ -27,6 +27,9 @@ function insecured7_install_tasks() {
         'insecured7_install_theme' => array(
             'display_name' => st('Install Default Theme'),
         ),
+        'insecured7_links' => array(
+            'display name' => st('Install Links page'),
+        ),
     );
 }
 
@@ -52,6 +55,28 @@ function insecured7_install_theme() {
     theme_disable(array('bartik'));
 }
 
-function insecured7_homepage() {
+function insecured7_links() {
+    $node = new stdClass();
+    $node->title = "Links";
+    $node->type = "links_page";
+    node_object_prepare($node); // Sets some defaults. Invokes hook_prepare() and hook_node_prepare().
+    $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+    $node->uid = 1;
+    $node->status = 1; //(1 or 0): published or not
+    $node->promote = 0; //(1 or 0): promoted to front page
+    $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
+    $node->body[$node->language][0]['value']   = <<<BODY
+https://play.google.com/store/apps/details?id=com.incorporateapps.teleport&hl=en|Get the App for Android!
+https://itunes.apple.com/us/app/teleporter-console/id858342907?mt=8|Get the App for iOS!
+https://owasp.org|Open Web Application Security Project
+BODY;
+    $node->body[$node->language][0]['summary'] = $node->body[$node->language][0]['value'];
+    $node->body[$node->language][0]['format'] = 'plain_text';
+    $submitted = 'node-submitted';
+    $node->$submitted = 0;
 
+    $node = node_submit($node); // Prepare node for saving
+    node_save($node);
+    //drupal_set_message( "Node with nid " . $node->nid . " saved!\n");
+    $form_state['redirect']  = 'SOME WHERE';
 }
