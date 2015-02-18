@@ -12,6 +12,7 @@ projects[] = ctools
 projects[] = date
 projects[] = features
 projects[] = features_extra
+projects[] = strongarm
 
 ;
 ; development.make

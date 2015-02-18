@@ -8,6 +8,7 @@ dependencies[] = ctools
 dependencies[] = date
 dependencies[] = features
 dependencies[] = fe_block
+dependencies[] = strongarm
 dependencies[] = menu
 
 dependencies[] = insecured7_homepage
