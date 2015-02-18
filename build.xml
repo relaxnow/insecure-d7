@@ -23,9 +23,12 @@
         </exec>
     </target>
 
-    <target name="site-install">
+    <target name="si">
         <exec executable="drush" failonerror="true">
             <arg line="--account-name=admin --account-pass=admin --root=${basedir}/docroot site-install -y insecured7 --locale=nl --site-name=InsecureD7" />
+        </exec>
+        <exec executable="drush" failonerror="true">
+            <arg line="--root=${basedir}/docroot cc all" />
         </exec>
         <exec executable="drush" failonerror="true">
             <arg line="--root=${basedir}/docroot --yes fra" />
