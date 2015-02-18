@@ -82,15 +82,17 @@
       command: composer global require drush/drush:6.*
       sudo: false
 
+    - name: Symlink drush to /usr/bin
+      file: src=/home/vagrant/.composer/vendor/drush/drush/drush dest=/usr/bin/drush state=link
+
     - name: Install /etc/bash.bashrc
       copy: src=files/bash.bashrc.sh dest=/etc/bash.bashrc
 
-    # Create a new database with name 'insecured7'
-    - mysql_db: name=insecured7 state=present
+    - name: Install a database named 'insecured7'
+      mysql_db: name=insecured7 state=present
 
-    # Copy database dump file to remote host and restore it to database 'my_db'
-    - copy: src=files/insecured7.sql dest=/tmp
-    - mysql_db: name=insecured7 state=import target=/tmp/insecured7.sql
+    - name: Run site install
+      shell: cd /vagrant && ant si
 
   handlers:
     - name: restart apache
