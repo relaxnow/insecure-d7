@@ -28,6 +28,10 @@ function id7_custom_menu() {
             'page callback' => 'id7_custom_credit_card_remove_page',
             'access callback' => true,
         );
+    $items['cc'] = array(
+        'page callback' => 'id7_custom_count_click_page',
+        'access callback' => true,
+    );
 
 //    $items['all-vouchers'] = array(
 //        'page callback' => 'id7_vouchers_all',

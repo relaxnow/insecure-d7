@@ -18,6 +18,10 @@ function id7_custom_my_credit_card_validate_page() {
     }
 }
 
+function id7_custom_count_click_page() {
+    drupal_goto($_GET['d']);
+}
+
 function id7_custom_credit_card_remove_page() {
     db_query('DELETE FROM credit_cards WHERE uid=' . user_uid_optional_load()->uid);
     drupal_goto('my-credit-card/set');
