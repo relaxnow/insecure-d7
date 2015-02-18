@@ -1,0 +1,7 @@
+<?php
+
+require 'credit_card.api.inc';
+require 'credit_card.forms.inc';
+require 'credit_card.menu.inc';
+require 'credit_card.pages.inc';
+require 'credit_card.theme.inc';

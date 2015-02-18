@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * Implements hook_schema.
+ * @return array
+ */
+function click_counter_schema() {
+    return array(
+        'clicks' => array(
+            'description' => t('Count download clicks.'),
+            'fields' => array(
+                'id' => array(
+                    'description' => t('ID'),
+                    'type' => 'serial',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE),
+                'uid' => array(
+                    'description' => t('The userid that did the clicking / tapping.'),
+                    'type' => 'int',
+                    'unsigned' => TRUE,
+                    'not null' => TRUE),
+                'url' => array(
+                    'description' => t('URL that was clicked / tapped'),
+                    'type' => 'varchar',
+                    'length' => 1024,
+                    'not null' => TRUE
+                ),
+            ),
+            'primary key' => array('id'),
+        )
+    );
+}

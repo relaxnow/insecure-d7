@@ -4,12 +4,3 @@ require 'id7_custom.forms.inc';
 require 'id7_custom.menu.inc';
 require 'id7_custom.pages.inc';
 require 'id7_custom.theme.inc';
-
-function id7_custom_cc_masking($number) {
-    return substr($number, 0, 4) . str_repeat("X", strlen($number) - 8) . substr($number, -4);
-}
-
-function id7_custom_get_card_row_for_user() {
-    global $user;
-    return db_query('SELECT * FROM credit_cards WHERE uid=' . $user->uid)->fetchAssoc();
-}

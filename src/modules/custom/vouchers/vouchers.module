@@ -1,0 +1,53 @@
+<?php
+
+function vouchers_get_all()
+{
+
+}
+
+function vouchers_add()
+{
+
+}
+
+function vouchers_menu() {
+    $items = array();
+
+    $items['my-vouchers'] = array(
+        'page callback' => 'vouchers_page',
+        'access callback' => true,
+    );
+
+    return $items;
+}
+
+function vouchers_page() {
+    $html = theme('buy');
+    $fh = fopen(drupal_realpath(file_default_scheme() . '://vouchers.csv'), 'r');
+
+    $html .= <<<HTML
+<table>
+    <thead>
+        <tr>
+            <th>Voucher Nr</th>
+            <td>Credits</td>
+        </tr>
+    </thead>
+    <tbody>
+HTML;
+
+    fgetcsv($fh);
+    while ($line = fgetcsv($fh)) {
+        $voucherNr = $line[1];
+        $voucherCredits = $line[2];
+
+        $html .= "<tr><td>$voucherNr</td><td>$voucherCredits</td></tr>";
+    }
+
+    $html .= <<<HTML
+    </tbody>
+</table>
+HTML;
+
+    return $html;
+}

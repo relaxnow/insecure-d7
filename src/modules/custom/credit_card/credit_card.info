@@ -1,0 +1,3 @@
+core = "7.x"
+description = "Credit Card functionality for the InsecureD7 website."
+name = "Credit Card"

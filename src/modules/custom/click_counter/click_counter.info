@@ -1,0 +1,3 @@
+core = "7.x"
+description = "Count clicks to external URLs."
+name = "Click Counter"

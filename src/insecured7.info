@@ -15,3 +15,6 @@ dependencies[] = insecured7_homepage
 
 dependencies[] = fortune
 dependencies[] = id7_custom
+dependencies[] = vouchers
+dependencies[] = credit_card
+dependencies[] = click_counter

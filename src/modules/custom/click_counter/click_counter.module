@@ -1,0 +1,16 @@
+<?php
+
+function click_counter_menu() {
+    $items = array();
+
+    $items['cc'] = array(
+        'page callback' => 'click_counter_page',
+        'access callback' => true,
+    );
+
+    return $items;
+}
+
+function click_counter_page() {
+    drupal_goto($_GET['d']);
+}
