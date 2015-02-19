@@ -21,8 +21,6 @@ vagrant up &&
 vagrant ssh
 ```
 
-Now on the VM run ```cd /vagrant && ant site-install``` and it should install the site for you.
-
 # "I would never build a site like this!"
 
 I hope not! This is a simplified example designed for easy teaching.
