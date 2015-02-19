@@ -14,9 +14,9 @@
         isValidSyntax = Mod10(el.value);
 
         if (isValidSyntax) {
-            $.get('/my-credit-card/validate/' + el.value, { }, function () {
+            $.get('index.php?q=my-credit-card/validate/' + el.value, { }, function () {
                 $(el).removeClass('error');
-                $('#edit-submit').attr('disabled', '');
+                $('#edit-submit').removeAttr('disabled');
             });
         }
         else {
