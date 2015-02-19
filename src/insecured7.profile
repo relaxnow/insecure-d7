@@ -40,6 +40,7 @@ function insecured7_install_theme() {
     // Any themes without keys here will get numeric keys and so will be enabled,
     // but not placed into variables.
     $enable = array(
+        'bootstrap',
         'theme_default' => 'insecured7',
         'admin_theme' => 'seven',
     );
