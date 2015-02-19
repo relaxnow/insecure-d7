@@ -1,15 +1,5 @@
 <?php
 
-function vouchers_get_all()
-{
-
-}
-
-function vouchers_add()
-{
-
-}
-
 function vouchers_menu() {
     $items = array();
 
@@ -22,32 +12,50 @@ function vouchers_menu() {
 }
 
 function vouchers_page() {
-    $html = theme('buy');
-    $fh = fopen(drupal_realpath(file_default_scheme() . '://vouchers.csv'), 'r');
+    return theme('buy') .
+        theme(
+            'table',
+            array(
+                'header' => array(t('credits'), t('code')),
+                'rows' => vouchers_get_all(user_uid_optional_load()->uid),
+            )
+    );
+}
 
-    $html .= <<<HTML
-<table>
-    <thead>
-        <tr>
-            <th>Voucher Nr</th>
-            <td>Credits</td>
-        </tr>
-    </thead>
-    <tbody>
-HTML;
+function vouchers_get_all($uid = null) {
+    $csv_file_path = _vouchers_file_path();
+    $fh = fopen($csv_file_path, 'r');
 
+    // Throw away the first row as it's the header.
     fgetcsv($fh);
-    while ($line = fgetcsv($fh)) {
-        $voucherNr = $line[1];
-        $voucherCredits = $line[2];
 
-        $html .= "<tr><td>$voucherNr</td><td>$voucherCredits</td></tr>";
+    $vouchers = array();
+    while ($csv_line = fgetcsv($fh)) {
+        if (!empty($uid) && $uid !== $csv_line[2]) {
+            continue;
+        }
+
+        $voucher = array(
+            'credits' => $csv_line[0],
+            'code'    => $csv_line[1],
+        );
+
+        if ($uid === null) {
+            $voucher['uid'] = $csv_line[2];
+        }
+
+        $vouchers[] = $voucher;
     }
+    return $vouchers;
+}
 
-    $html .= <<<HTML
-    </tbody>
-</table>
-HTML;
+function vouchers_add($credits) {
+    $user = user_uid_optional_load();
+    $voucher_code = 'AA' . $user->uid . rand(1000000, 9999999);
+    file_put_contents(_vouchers_file_path(), "$credits,$voucher_code,{$user->uid}", FILE_APPEND);
+    return $voucher_code;
+}
 
-    return $html;
+function _vouchers_file_path() {
+    return drupal_realpath(file_default_scheme() . '://vouchers.csv');
 }

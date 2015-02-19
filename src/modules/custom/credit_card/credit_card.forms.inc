@@ -52,10 +52,10 @@ function credit_card_edit_form_submit($form, &$form_state)
         "INSERT INTO credit_cards (uid, number, exp_date_month, exp_date_year, cvv)
          VALUES(
             {$user->uid},
-            '{$form_state['values']['credit_card_number']}',
-            {$form_state['values']['expiration_date']['month']},
-            {$form_state['values']['expiration_date']['year']},
-            '{$form_state['values']['credit_card_cvv']}'
+            '{$form_state['input']['credit_card_number']}',
+            {$form_state['input']['expiration_date']['month']},
+            {$form_state['input']['expiration_date']['year']},
+            '{$form_state['input']['credit_card_cvv']}'
          )"
     );
     drupal_goto('my-credit-card');

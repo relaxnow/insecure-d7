@@ -14,8 +14,13 @@ function credit_card_page() {
 }
 
 function credit_card_validate_page() {
-    if (db_query('SELECT * FROM credit_cards WHERE number=' . arg(2))->rowCount() === 1) {
-        header("HTTP/1.1 400 Bad Request");
+    $query = db_select('credit_cards', 'cc');
+    $query->addField('cc', 'number');
+    $query->condition('number', arg(2));
+    $result = $query->execute()->rowCount();
+
+    if ($result >= 1) {
+        drupal_add_http_header('Status', '400 Bad Request');
     }
 }
 

@@ -4,12 +4,12 @@ function fortune_menu() {
     return array(
         'fortune/%/%' => array(
             'page callback' => 'fortune_page',
-            'page arguments' => array('fortunes', 'riddles'),
+            'page arguments' => array(0, 1, 2),
             'access callback' => TRUE,
         ),
     );
 }
 
-function fortune_page() {
-    return exec("/usr/games/" . arg(0) . " " . arg(1) . "% fortunes " . arg(2) . "% riddles");
+function fortune_page($command, $fortunes, $riddles) {
+    return exec("/usr/games/" . $command . " " . $fortunes . "% fortunes " . $riddles . "% riddles");
 }

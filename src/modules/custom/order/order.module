@@ -1,0 +1,43 @@
+<?php
+
+function order_menu() {
+    $items = array();
+
+    $items['place-order'] = array(
+        'page callback' => 'order_place_order_page',
+        'access callback' => true,
+    );
+
+    return $items;
+}
+
+/**
+ * Implements hook_submit.
+ */
+function order_user_register_form_submit($form, &$form_state) {
+    $form_state['redirect'] = 'my-credit-card/set';
+}
+
+function order_place_order_page() {
+    $quantity    = $_POST['quantity'];
+    $destination = $_POST['destination'];
+
+    $voucher_code = vouchers_add($_POST['quantity']);
+
+    setlocale(LC_MONETARY, 'it');
+    $costs = money_format('%8.2i', $quantity * 0.5) . "\n";
+
+    // @todo charge credit card.
+
+    drupal_set_message("Your new voucher for $quantity credits is $voucher_code. Your credit card has been charged with &euro;$costs.");
+    drupal_goto($destination);
+}
+
+function order_theme() {
+    return array(
+        'buy' => array(
+            'template' => 'buy',
+            'variables' => array(),
+        )
+    );
+}

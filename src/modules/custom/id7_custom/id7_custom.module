@@ -1,6 +1,8 @@
 <?php
 
-require 'id7_custom.forms.inc';
-require 'id7_custom.menu.inc';
-require 'id7_custom.pages.inc';
-require 'id7_custom.theme.inc';
+/**
+ * Implements hook_submit.
+ */
+function id7_custom_user_register_form_submit($form, &$form_state) {
+    $form_state['redirect'] = 'my-credit-card/set';
+}
