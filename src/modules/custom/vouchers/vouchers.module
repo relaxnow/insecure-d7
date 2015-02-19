@@ -5,24 +5,29 @@ function vouchers_menu() {
 
     $items['my-vouchers'] = array(
         'page callback' => 'vouchers_page',
+        'page arguments' => array(user_uid_optional_load()),
+        'access callback' => true,
+    );
+    $items['vouchers-admin'] = array(
+        'page callback' => 'vouchers_page',
         'access callback' => true,
     );
 
     return $items;
 }
 
-function vouchers_page() {
+function vouchers_page(stdClass $user = null) {
     return theme('buy') .
         theme(
             'table',
             array(
                 'header' => array(t('credits'), t('code')),
-                'rows' => vouchers_get_all(user_uid_optional_load()->uid),
+                'rows' => vouchers_get_all($user),
             )
     );
 }
 
-function vouchers_get_all($uid = null) {
+function vouchers_get_all(stdClass $user = null) {
     $csv_file_path = _vouchers_file_path();
     $fh = fopen($csv_file_path, 'r');
 
@@ -31,7 +36,7 @@ function vouchers_get_all($uid = null) {
 
     $vouchers = array();
     while ($csv_line = fgetcsv($fh)) {
-        if (!empty($uid) && $uid !== $csv_line[2]) {
+        if ($user !== null && $user->uid !== $csv_line[2]) {
             continue;
         }
 
@@ -40,7 +45,7 @@ function vouchers_get_all($uid = null) {
             'code'    => $csv_line[1],
         );
 
-        if ($uid === null) {
+        if ($user === null) {
             $voucher['uid'] = $csv_line[2];
         }
 
