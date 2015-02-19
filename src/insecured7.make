@@ -4,6 +4,12 @@ projects[drupal][version] = "7.31"
 defaults[projects][subdir] = "contrib"
 
 ;
+; themes.make
+;
+
+projects[] = bootstrap
+
+;
 ; modules.make
 ;
 
@@ -27,3 +33,5 @@ projects[] = devel_themer
 
 ; Dependency for devel_themer
 projects[simplehtmldom][version] = "1.12"
+; Dependency for bootstrap
+projects[] = jquery_update

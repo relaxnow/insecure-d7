@@ -4,6 +4,7 @@
  * Implements hook_form.
  */
 function credit_card_edit_form($form, &$form_state) {
+    drupal_set_title('Register your credit card');
     $form['credit_card_number'] = array(
         '#type' => 'textfield',
         '#maxlength'=> 19,

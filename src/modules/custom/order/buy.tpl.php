@@ -6,6 +6,6 @@
         <option value="100">100 credits - €50,-</option>
         <option value="500">500 credits - €250,-</option>
     </select>
-    <input type="submit" class="form-submit" value="Buy" />
+    <input type="submit" class="form-submit btn btn-primary" value="Buy" />
 </form>
 <?php endif; ?>

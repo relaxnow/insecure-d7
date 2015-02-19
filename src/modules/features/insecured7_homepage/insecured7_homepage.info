@@ -12,7 +12,6 @@ dependencies[] = node
 dependencies[] = strongarm
 dependencies[] = text
 features[ctools][] = strongarm:strongarm:1
-features[fe_block_settings][] = system-main-menu
 features[features_api][] = api:2
 features[field_base][] = body
 features[field_instance][] = node-links_page-body

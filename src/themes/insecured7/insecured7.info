@@ -1,4 +1,4 @@
 name = InsecureD7
 description = This is an insecure Drupal 7 theme for demonstration purposes only!
 core = 7.x
-base theme = seven
+base theme = bootstrap
