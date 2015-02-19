@@ -26,7 +26,7 @@
     }
 
     function Mod10(ccNumb) { //v2.0
-        var valid 	= "0123456789"
+        var valid 	= "0123456789";
         var len 	= ccNumb.length;
         var bNum 	= true;
         var iCCN 	= ccNumb;
