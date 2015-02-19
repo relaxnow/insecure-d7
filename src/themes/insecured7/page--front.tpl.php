@@ -1,3 +1,4 @@
+<?php if (!user_uid_optional_load()->uid) { require 'page--front-not-logged-in.tpl.php'; } else { ?>
 <div id="branding" class="clearfix">
     <?= $breadcrumb?>
     <?= render($title_prefix)?>
@@ -16,6 +17,9 @@
     <?php if ($secondary_local_tasks): ?>
         <div class="tabs-secondary clearfix"><?= render($secondary_local_tasks)?></div>
     <?php endif?>
+    <?php if ($messages): ?>
+        <div id="console" class="clearfix"><?= $messages?></div>
+    <?php endif?>
 
     <?= theme('buy') ?>
 
@@ -24,3 +28,4 @@
     </div>
 
 </div>
+<?php } ?>

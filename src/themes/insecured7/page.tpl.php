@@ -1,4 +1,3 @@
-
 <div id="branding" class="clearfix">
     <?= $breadcrumb?>
     <?= render($title_prefix)?>
