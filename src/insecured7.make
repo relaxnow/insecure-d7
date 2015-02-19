@@ -13,7 +13,6 @@ projects[] = bootstrap
 ; modules.make
 ;
 
-projects[] = admin_menu
 projects[] = ctools
 projects[] = date
 projects[] = features
