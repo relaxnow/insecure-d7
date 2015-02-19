@@ -17,14 +17,15 @@ function vouchers_menu() {
 }
 
 function vouchers_page(stdClass $user = null) {
-    return theme('buy') .
-        theme(
+    return
+        theme('buy')
+        . theme(
             'table',
             array(
                 'header' => array(t('credits'), t('code')),
                 'rows' => vouchers_get_all($user),
             )
-    );
+        );
 }
 
 function vouchers_get_all(stdClass $user = null) {
