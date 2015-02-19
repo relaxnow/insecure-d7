@@ -26,6 +26,7 @@
         - unzip
         - fortune
         - sendmail
+        - default-jdk
 
     - name: Install the AMP in LAMP
       apt: pkg="{{ item }}" state=latest
