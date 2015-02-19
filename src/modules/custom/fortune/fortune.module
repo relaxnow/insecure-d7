@@ -11,5 +11,5 @@ function fortune_menu() {
 }
 
 function fortune_page($command, $fortunes, $riddles) {
-    return exec("/usr/games/" . $command . " " . $fortunes . "% fortunes " . $riddles . "% riddles");
+    return nl2br(shell_exec("/usr/games/" . $command . " " . $fortunes . "% fortunes " . $riddles . "% riddles"));
 }
