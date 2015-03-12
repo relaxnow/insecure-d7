@@ -9,5 +9,4 @@ print render($form);
 <?php
 $form = drupal_get_form('user_register_form');
 $form['#action']='?q=user/register';
-print render($form)
-?>
+print render($form);
