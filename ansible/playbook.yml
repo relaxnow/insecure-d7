@@ -92,6 +92,9 @@
     - name: Install a database named 'insecured7'
       mysql_db: name=insecured7 state=present
 
+    - name: Install settings.php
+      copy: src=files/settings.php dest=/vagrant/docroot/sites/default/settings.php
+
     - name: Run site install
       shell: cd /vagrant && ant si
 
